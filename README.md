@@ -87,3 +87,38 @@ npm start
 | `POST` | `/api/telemetry` | Ingest live GPS coordinates from driver devices |
 | `POST` | `/api/simulator/toggle` | Pause / resume background simulated traffic |
 | `WS` | `/` | WebSocket real-time pub/sub streaming |
+
+---
+
+## ☁️ Free Cloud Deployment Options
+
+### Option 1: Render.com (Recommended for 24/7 Free Hosting)
+Render offers a generous free tier with **native WebSocket support**, free SSL (`https://` & `wss://`), and servers located in **Singapore** (ideal for low latency in India).
+
+1. Push this repository to GitHub:
+   ```bash
+   git remote add origin https://github.com/<your-username>/ksrtc-tracker.git
+   git push -u origin main
+   ```
+2. Go to [https://dashboard.render.com](https://dashboard.render.com) and click **New +** &rarr; **Web Service**.
+3. Select your GitHub repository.
+4. Render will auto-detect [`render.yaml`](file:///data/data/com.termux/files/home/ksrtc-tracker/render.yaml) or set:
+   - **Environment**: Node
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Plan**: Free
+5. Click **Deploy Web Service**. Your live URL will be: `https://<your-app-name>.onrender.com`.
+
+### Option 2: Koyeb (Free Nano Instance)
+Koyeb provides 1 always-on free instance with Docker support and WebSocket streaming:
+1. Go to [https://app.koyeb.com](https://app.koyeb.com).
+2. Choose **GitHub** deployment and select your repository.
+3. Koyeb uses the included [`Dockerfile`](file:///data/data/com.termux/files/home/ksrtc-tracker/Dockerfile) automatically.
+4. Set port to `3000` and deploy.
+
+### Option 3: Instant Live Public Tunnel (No Signup / Instant Access)
+To share your local instance with anyone over the internet instantly:
+```bash
+~/ksrtc-tracker/scripts/tunnel.sh
+```
+This generates a live public HTTPS address (e.g. `https://xxxxxx.lhr.life`) with full WebSocket support.
