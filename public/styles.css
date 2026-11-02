@@ -34,70 +34,80 @@ body, html {
   position: relative;
 }
 
-/* Header */
+/* Header - Ultra-compact headlines to maximize map height */
 .header {
   background: linear-gradient(135deg, var(--ksrtc-dark-red) 0%, var(--ksrtc-red) 100%);
   color: white;
-  padding: 10px 16px;
+  padding: 4px 10px;
+  min-height: 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   z-index: 1000;
+  flex-shrink: 0;
 }
 
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .logo-badge {
   background: white;
   color: var(--ksrtc-red);
   font-weight: 900;
-  font-size: 14px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  letter-spacing: 1px;
+  font-size: 11px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .title-group h1 {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
-.title-group p {
-  font-size: 11px;
+.title-group .header-subtitle {
+  font-size: 9.5px;
   opacity: 0.85;
+  line-height: 1;
+  margin-top: 1px;
+  white-space: nowrap;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
 }
 
 .live-indicator {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   background: rgba(0, 0, 0, 0.3);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-size: 11px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   background-color: #22c55e;
   border-radius: 50%;
-  box-shadow: 0 0 8px #22c55e;
+  box-shadow: 0 0 6px #22c55e;
   animation: pulse 1.5s infinite;
 }
 
@@ -111,13 +121,14 @@ body, html {
   background: rgba(255, 255, 255, 0.2);
   color: white;
   text-decoration: none;
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 6px;
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   font-weight: 500;
+  white-space: nowrap;
   transition: all 0.2s;
 }
 
@@ -130,13 +141,14 @@ body, html {
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
   font-size: 11px;
-  padding: 5px 9px;
-  border-radius: 6px;
+  padding: 3px 7px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.2s;
 }
 
@@ -235,15 +247,17 @@ body, html {
   color: #e2e8f0;
 }
 
-/* Search and Filters Bar */
+/* Search and Filters Bar - Compact height to maximize map */
 .filter-bar {
   background: #1e293b;
-  padding: 8px 14px;
+  padding: 4px 10px;
   display: flex;
-  gap: 10px;
+  gap: 6px;
   align-items: center;
   z-index: 999;
   border-bottom: 1px solid var(--card-border);
+  min-height: 34px;
+  flex-shrink: 0;
 }
 
 .search-input-wrapper {
@@ -256,9 +270,10 @@ body, html {
   background: #0f172a;
   border: 1px solid #334155;
   color: white;
-  padding: 7px 12px 7px 32px;
-  border-radius: 8px;
-  font-size: 13px;
+  padding: 4px 8px 4px 26px;
+  border-radius: 6px;
+  font-size: 12px;
+  height: 28px;
   outline: none;
   transition: border-color 0.2s;
 }
@@ -269,29 +284,31 @@ body, html {
 
 .search-icon {
   position: absolute;
-  left: 10px;
+  left: 8px;
   top: 50%;
   transform: translateY(-50%);
   color: #64748b;
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .route-select {
   background: #0f172a;
   border: 1px solid #334155;
   color: white;
-  padding: 7px 10px;
-  border-radius: 8px;
-  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  height: 28px;
   outline: none;
-  max-width: 180px;
+  max-width: 140px;
 }
 
-/* Map area */
+/* Map area - Expanded canvas height */
 #map {
-  flex: 1;
+  flex: 1 1 auto;
   width: 100%;
   height: 100%;
+  min-height: 0;
   background: #111827;
   z-index: 10;
 }
@@ -299,11 +316,11 @@ body, html {
 /* Floating controls on map */
 .map-floating-controls {
   position: absolute;
-  top: 110px;
-  right: 14px;
+  top: 76px;
+  right: 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   z-index: 500;
 }
 
@@ -311,15 +328,15 @@ body, html {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   color: white;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  font-size: 16px;
+  font-size: 14px;
   backdrop-filter: blur(8px);
 }
 
@@ -1077,5 +1094,75 @@ body, html {
 
   .bus-detail-sheet.active {
     transform: translateY(0);
+  }
+}
+
+/* Mobile adjustments to maximize map height */
+@media (max-width: 600px) {
+  .header {
+    padding: 3px 6px;
+    min-height: 32px;
+  }
+
+  .title-group .header-subtitle {
+    display: none; /* Hide subtitle on mobile so headline is a single slim line */
+  }
+
+  .title-group h1 {
+    font-size: 12px;
+  }
+
+  .btn-header-action span, .btn-driver-link span {
+    font-size: 10.5px;
+  }
+
+  .filter-bar {
+    padding: 3px 6px;
+    gap: 4px;
+    min-height: 30px;
+  }
+
+  .search-input-wrapper input {
+    height: 26px;
+    font-size: 11.5px;
+    padding: 3px 6px 3px 22px;
+  }
+
+  .search-icon {
+    font-size: 10px;
+    left: 6px;
+  }
+
+  .route-select {
+    height: 26px;
+    font-size: 10px;
+    max-width: 115px;
+    padding: 2px 4px;
+  }
+
+  .map-floating-controls {
+    top: 66px;
+    right: 8px;
+    gap: 4px;
+  }
+
+  .btn-float {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  #active-bus-count {
+    display: none; /* Only show pulsing green dot on ultra-narrow screens */
+  }
+
+  #btn-open-timetables span {
+    font-size: 0;
+  }
+  #btn-open-timetables span::before {
+    content: "📅";
+    font-size: 12px;
   }
 }

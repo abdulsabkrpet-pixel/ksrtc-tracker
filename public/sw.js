@@ -1,5 +1,5 @@
 // KSRTC Where Is My Bus - Progressive Web App Service Worker
-const CACHE_NAME = 'ksrtc-tracker-v1';
+const CACHE_NAME = 'ksrtc-tracker-v2';
 
 const STATIC_ASSETS = [
   '/',

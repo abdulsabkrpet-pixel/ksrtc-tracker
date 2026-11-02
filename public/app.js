@@ -486,6 +486,14 @@ function initMap() {
     maxZoom: 19
   }).addTo(map);
 
+  // Auto-resize Leaflet canvas on layout and orientation changes to maximize map viewport
+  window.addEventListener('resize', () => {
+    if (map) map.invalidateSize();
+  });
+  setTimeout(() => {
+    if (map) map.invalidateSize();
+  }, 300);
+
   // Touching anywhere on the map displays all buses marching towards and away from that place
   map.on('click', (e) => {
     const nearest = findNearestStop(e.latlng.lat, e.latlng.lng);
