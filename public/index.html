@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#c0262d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <title>Where Is My Bus - KSRTC Realtime Tracker</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚍</text></svg>">
+</head>
+<body>
+  <div id="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand-wrapper">
+        <div class="logo-badge">KSRTC</div>
+        <div class="title-group">
+          <h1>ಕರ್ನಾಟಕ ಸಾರಿಗೆ &bull; Live Tracker</h1>
+          <p>Where Is My Bus &bull; Real-time GPS</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- Offline status pill -->
+        <div id="offline-pill" class="offline-indicator" style="display: none;">
+          <span>⚡ Offline</span>
+        </div>
+        <div class="live-indicator">
+          <span class="pulse-dot"></span>
+          <span id="active-bus-count">0 Buses Live</span>
+        </div>
+        <button id="btn-open-timetables" class="btn-header-action" title="View Offline Timetables">
+          <span>📅 Timetables</span>
+        </button>
+        <button id="btn-toggle-lang" class="btn-header-action" title="Switch Language (ಕನ್ನಡ / English)">
+          <span id="lang-btn-label">ಕನ್ನಡ</span>
+        </button>
+        <button id="btn-install-pwa" class="btn-header-action" style="display: none; background: #f59e0b; color: black;" title="Install Android App">
+          <span>📲 Install</span>
+        </button>
+        <a href="driver.html" class="btn-driver-link" title="Driver Broadcast Mode">
+          <span>🧑‍✈️ Driver</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Filters & Search Bar -->
+    <div class="filter-bar">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="bus-search-input" placeholder="Search Bus (e.g. KA-09) or Stop..." autocomplete="off">
+      </div>
+      <select id="route-selector" class="route-select">
+        <option value="ALL">All Routes (ಎಲ್ಲಾ ಮಾರ್ಗಗಳು)</option>
+      </select>
+    </div>
+
+    <!-- Map Canvas -->
+    <div id="map"></div>
+
+    <!-- Floating Map Controls -->
+    <div class="map-floating-controls">
+      <button id="btn-fit-bounds" class="btn-float" title="Fit Corridor Bounds">📍</button>
+      <button id="btn-my-location" class="btn-float" title="My GPS Location">🎯</button>
+      <button id="btn-toggle-sim" class="btn-float" title="Pause / Resume Live Simulation">⚡</button>
+    </div>
+
+    <!-- Place Transit Hub Drawer (Incoming & Outgoing Buses across ALL routes) -->
+    <div id="place-hub-sheet" class="bus-detail-sheet place-hub-sheet">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-header">
+        <div class="bus-title-group">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📍</span>
+            <h2 id="hub-place-name">Krishnarajpet (K.R. Pete)</h2>
+          </div>
+          <div id="hub-place-kannada" class="bus-subtitle">ಕೃಷ್ಣರಾಜಪೇಟೆ ಬಸ್ ನಿಲ್ದಾಣ &bull; Live Transit Hub</div>
+        </div>
+        <button id="btn-close-hub" class="btn-close-sheet">&times;</button>
+      </div>
+
+      <!-- Hub Category Selector Tabs -->
+      <div class="hub-tab-bar">
+        <button id="tab-incoming" class="hub-tab active" data-tab="incoming">
+          <span class="hub-tab-icon">📥</span>
+          <span id="tab-incoming-title">Coming Here (ಬರುತ್ತಿರುವ)</span>
+          <span id="count-incoming" class="hub-count-badge">0</span>
+        </button>
+        <button id="tab-outgoing" class="hub-tab" data-tab="outgoing">
+          <span class="hub-tab-icon">📤</span>
+          <span id="tab-outgoing-title">Going Away (ಹೊರಟ)</span>
+          <span id="count-outgoing" class="hub-count-badge">0</span>
+        </button>
+      </div>
+
+      <!-- Scrollable Bus Lists -->
+      <div id="hub-buses-container" class="hub-buses-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Bottom Sheet / Bus Details Drawer -->
+    <div id="bus-detail-sheet" class="bus-detail-sheet">
+      <div class="sheet-handle"></div>
+      
+      <div class="sheet-header">
+        <div class="bus-title-group">
+          <h2 id="sheet-bus-number">KA-09-F-8812</h2>
+          <div id="sheet-bus-service" class="bus-subtitle">Airavat Club Class (Multi-Axle)</div>
+          <div style="margin-top: 6px;">
+            <span id="sheet-occupancy-pill" class="occupancy-pill available">🟢 18 Seats Available</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span id="sheet-bus-badge" class="bus-badge" style="background: #15803d;">AC Luxury</span>
+          <button id="btn-close-sheet" class="btn-close-sheet">&times;</button>
+        </div>
+      </div>
+
+      <!-- Live Arrival Alert Banner -->
+      <div class="arrival-alert-card">
+        <div class="arrival-info">
+          <span class="arrival-label">Approaching Next Stop</span>
+          <span id="sheet-next-stop-name" class="arrival-stop-name">Mandya KSRTC Bus Stand</span>
+          <span id="sheet-next-stop-kannada" style="font-size: 11px; opacity: 0.85; margin-top: 1px;">ಮಂಡ್ಯ</span>
+        </div>
+        <div class="arrival-eta">
+          <div id="sheet-eta-time" class="eta-time">8 min</div>
+          <div id="sheet-eta-dist" class="eta-dist">5.4 km away</div>
+        </div>
+      </div>
+
+      <!-- Live Bus Telemetry Chips -->
+      <div class="telemetry-row">
+        <div class="telemetry-chip">
+          <div class="label">Live Speed</div>
+          <div id="sheet-speed" class="value">68 km/h</div>
+        </div>
+        <div class="telemetry-chip">
+          <div class="label">Direction</div>
+          <div id="sheet-direction" class="value">FORWARD</div>
+        </div>
+        <div class="telemetry-chip">
+          <div class="label">Dep. Time</div>
+          <div id="sheet-dep-time" class="value">11:30 AM</div>
+        </div>
+        <div class="telemetry-chip">
+          <div class="label">Fare</div>
+          <div id="sheet-fare" class="value">₹320</div>
+        </div>
+      </div>
+
+      <!-- Proximity Alarm Action Area -->
+      <div class="alert-action-row">
+        <div id="alert-set-box">
+          <button id="btn-open-alert-modal" class="btn-set-alert">
+            <span>🔔 Set Proximity Alarm for My Stop</span>
+          </button>
+        </div>
+        <div id="alert-active-box" class="active-alert-card" style="display: none;">
+          <div class="active-alert-info">
+            <span style="font-size: 16px;">🔔</span>
+            <div>
+              <strong id="active-alert-target">Alert active for Mandya</strong><br>
+              <span id="active-alert-threshold" style="font-size: 11px; opacity: 0.85;">Trigger when &lt; 3 km</span>
+            </div>
+          </div>
+          <button id="btn-cancel-alert" class="btn-cancel-alert">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Crowdsourced Passenger Location Sharing -->
+      <div class="crowdsource-action-row">
+        <button id="btn-crowdsource-toggle" class="btn-crowdsource">
+          <span id="crowdsource-indicator" class="crowdsource-dot"></span>
+          <span id="crowdsource-btn-text">📍 I'm on this bus (Broadcast My GPS)</span>
+        </button>
+      </div>
+
+      <!-- Stops Timeline -->
+      <div class="timeline-title">Route Stops &amp; Live Arrival Times</div>
+      <div id="sheet-timeline" class="stop-timeline">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Proximity Alarm Setup Modal -->
+    <div id="alert-modal" class="alert-modal-overlay">
+      <div class="alert-modal-card">
+        <div class="modal-header">
+          <div class="modal-title">
+            <span>🔔</span> Set Bus Proximity Alert
+          </div>
+          <button id="btn-close-modal" class="btn-close-sheet">&times;</button>
+        </div>
+        
+        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+          Choose your arrival/boarding stop. Your phone will chime and notify you before the bus reaches you.
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px; text-transform: uppercase;">
+            Target Stop
+          </label>
+          <select id="modal-stop-select" class="form-control" style="width: 100%; background: #0f172a; border: 1px solid #334155; color: white; padding: 10px; border-radius: 8px; font-size: 13px; outline: none;">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">
+          Alert Distance Threshold
+        </div>
+        <div class="distance-pills">
+          <div class="pill-option" data-km="1">
+            <div class="pill-dist">1 km</div>
+            <div class="pill-sub">~2 mins away</div>
+          </div>
+          <div class="pill-option selected" data-km="3">
+            <div class="pill-dist">3 km</div>
+            <div class="pill-sub">~5 mins away</div>
+          </div>
+          <div class="pill-option" data-km="5">
+            <div class="pill-dist">5 km</div>
+            <div class="pill-sub">~8 mins away</div>
+          </div>
+          <div class="pill-option" data-km="10">
+            <div class="pill-dist">10 km</div>
+            <div class="pill-sub">~15 mins away</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+          <button id="btn-test-chime" type="button" style="flex: 1; background: #334155; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">
+            🎵 Test Chime
+          </button>
+        </div>
+
+        <button id="btn-confirm-alert" class="btn-confirm-alert">
+          <span>🔔 Activate Alarm</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Offline Timetables Modal -->
+    <div id="timetable-modal" class="alert-modal-overlay">
+      <div class="alert-modal-card timetable-modal-card">
+        <div class="modal-header">
+          <div class="modal-title">
+            <span>📅</span> KSRTC Schedules &amp; Timetables
+          </div>
+          <button id="btn-close-timetable-modal" class="btn-close-sheet">&times;</button>
+        </div>
+
+        <div class="timetable-badge-bar">
+          <span class="offline-cache-badge">💾 Offline Ready &bull; Cached Locally</span>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <select id="timetable-route-filter" class="form-control" style="width: 100%; background: #0f172a; border: 1px solid #334155; color: white; padding: 10px; border-radius: 8px; font-size: 13px; outline: none;">
+            <option value="ALL">All Corridors (ಎಲ್ಲಾ ಮಾರ್ಗಗಳು)</option>
+            <option value="KA-BLR-MYS-01">Bengaluru ↔ Mysuru (Expressway)</option>
+            <option value="KA-BLR-MNG-03">Bengaluru ↔ Mangaluru (Shiradi Ghat)</option>
+            <option value="KA-BLR-HUB-02">Bengaluru ↔ Hubballi (NH 48)</option>
+            <option value="KA-BLR-BLG-04">Bengaluru ↔ Belagavi (CBT)</option>
+            <option value="KA-MYS-MDK-05">Mysuru ↔ Madikeri (Coorg)</option>
+            <option value="KA-MYS-SMG-06">Mysuru ↔ Shivamogga (Shimoga)</option>
+            <option value="KA-BLR-KRP-07">Bengaluru ↔ Krishnarajpet (K.R. Pete)</option>
+            <option value="KA-MYS-KRP-08">Mysuru ↔ Hassan via K.R. Pete</option>
+            <option value="KA-KRP-SRN-09">K.R. Pete ↔ Srinagara (via Nagamangala)</option>
+            <option value="KA-KRP-BHR-10">K.R. Pete ↔ Bherya (via Akkihebbalu)</option>
+            <option value="KA-SMG-MYS-KRP-11">Shivamogga ↔ Mysuru via K.R. Pete</option>
+          </select>
+        </div>
+
+        <!-- Scrollable Timetable List Container -->
+        <div id="timetable-list" class="timetable-list">
+          <!-- Dynamically populated from /api/timetables or Service Worker cache -->
+        </div>
+      </div>
+    </div>
+
+    <!-- In-App Proximity Toast Notification -->
+    <div id="proximity-toast" class="proximity-toast">
+      <div class="toast-bell-icon">🔔</div>
+      <div class="toast-body">
+        <div id="toast-title" class="toast-title">Bus Approaching!</div>
+        <div id="toast-desc" class="toast-desc">KA-09-F-8812 is only 1.2 km away from Mandya!</div>
+      </div>
+      <button id="btn-dismiss-toast" class="btn-dismiss-toast">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Client Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>

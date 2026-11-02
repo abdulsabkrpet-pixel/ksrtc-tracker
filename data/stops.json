@@ -1,0 +1,362 @@
+[
+  {
+    "id": "stop-kbs",
+    "name": "Bengaluru (Kempegowda Bus Station - Majestic)",
+    "kannadaName": "ಕೆಂಪೇಗೌಡ ಬಸ್ ನಿಲ್ದಾಣ (ಮೆಜೆಸ್ಟಿಕ್)",
+    "coordinates": [12.9778, 77.5726],
+    "platform": "Terminal 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-kengeri",
+    "name": "Kengeri TTMC / Satellite Stand",
+    "kannadaName": "ಕೆಂಗೇರಿ ಟಿಟಿಎಂಸಿ",
+    "coordinates": [12.9081, 77.4877],
+    "platform": "Bay 3",
+    "majorHub": true
+  },
+  {
+    "id": "stop-bidadi",
+    "name": "Bidadi Bus Stop",
+    "kannadaName": "ಬಿದದಿ",
+    "coordinates": [12.7967, 77.3828],
+    "platform": "Highway Bay",
+    "majorHub": false
+  },
+  {
+    "id": "stop-ramanagara",
+    "name": "Ramanagara KSRTC Bus Stand",
+    "kannadaName": "ರಾಮನಗರ",
+    "coordinates": [12.7237, 77.2811],
+    "platform": "Bay 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-channapatna",
+    "name": "Channapatna KSRTC Bus Stand",
+    "kannadaName": "ಚನ್ನಪಟ್ಟಣ",
+    "coordinates": [12.6518, 77.2034],
+    "platform": "Bay 2",
+    "majorHub": true
+  },
+  {
+    "id": "stop-maddur",
+    "name": "Maddur Bus Stand",
+    "kannadaName": "ಮದ್ದೂರು",
+    "coordinates": [12.5841, 77.0469],
+    "platform": "Bay 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-mandya",
+    "name": "Mandya KSRTC Bus Stand",
+    "kannadaName": "ಮಂಡ್ಯ",
+    "coordinates": [12.5244, 76.8989],
+    "platform": "Main Terminal",
+    "majorHub": true
+  },
+  {
+    "id": "stop-srirangapatna",
+    "name": "Srirangapatna Bus Stop",
+    "kannadaName": "ಶ್ರೀರಂಗಪಟ್ಟಣ",
+    "coordinates": [12.4223, 76.6854],
+    "platform": "Highway Bay",
+    "majorHub": false
+  },
+  {
+    "id": "stop-mysuru",
+    "name": "Mysuru Suburban Bus Stand",
+    "kannadaName": "ಮೈಸೂರು ಗ್ರಾಮಾಂತರ ಬಸ್ ನಿಲ್ದಾಣ",
+    "coordinates": [12.3118, 76.6552],
+    "platform": "Terminal 2",
+    "majorHub": true
+  },
+  {
+    "id": "stop-tumakuru",
+    "name": "Tumakuru KSRTC Bus Stand",
+    "kannadaName": "ತುಮಕೂರು",
+    "coordinates": [13.3379, 77.1018],
+    "platform": "Main Terminal",
+    "majorHub": true
+  },
+  {
+    "id": "stop-sira",
+    "name": "Sira KSRTC Stand",
+    "kannadaName": "ಶಿರಾ",
+    "coordinates": [13.7447, 76.9038],
+    "platform": "Bay 2",
+    "majorHub": false
+  },
+  {
+    "id": "stop-chitradurga",
+    "name": "Chitradurga KSRTC Stand",
+    "kannadaName": "ಚಿತ್ರದುರ್ಗ",
+    "coordinates": [14.2251, 76.4022],
+    "platform": "Platform 4",
+    "majorHub": true
+  },
+  {
+    "id": "stop-davanagere",
+    "name": "Davanagere KSRTC Stand",
+    "kannadaName": "ದಾವಣಗೆರೆ",
+    "coordinates": [14.4644, 75.9218],
+    "platform": "Main Terminal",
+    "majorHub": true
+  },
+  {
+    "id": "stop-hubballi",
+    "name": "Hubballi Old Bus Stand / Gokul Road",
+    "kannadaName": "ಹುಬ್ಬಳ್ಳಿ",
+    "coordinates": [15.3524, 75.1384],
+    "platform": "Terminal 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-dharwad",
+    "name": "Dharwad New Bus Stand",
+    "kannadaName": "ಧಾರವಾಡ ಹೊಸ ಬಸ್ ನಿಲ್ದಾಣ",
+    "coordinates": [15.4589, 75.0078],
+    "platform": "Platform 2",
+    "majorHub": true
+  },
+  {
+    "id": "stop-kittur",
+    "name": "Kittur Bus Stand",
+    "kannadaName": "ಕಿತ್ತೂರು",
+    "coordinates": [15.5975, 74.7891],
+    "platform": "Highway Bay",
+    "majorHub": false
+  },
+  {
+    "id": "stop-belagavi",
+    "name": "Belagavi Central Bus Stand (CBT)",
+    "kannadaName": "ಬೆಳಗಾವಿ ಸಿಬಿಟಿ",
+    "coordinates": [15.8497, 74.4977],
+    "platform": "Main Platform 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-kunigal",
+    "name": "Kunigal KSRTC Stand",
+    "kannadaName": "ಕುಣಿಗಲ್",
+    "coordinates": [13.0248, 77.0264],
+    "platform": "Bay 1",
+    "majorHub": false
+  },
+  {
+    "id": "stop-crpatna",
+    "name": "Channarayapatna Bus Stand",
+    "kannadaName": "ಚನ್ನರಾಯಪಟ್ಟಣ",
+    "coordinates": [12.9056, 76.3912],
+    "platform": "Bay 3",
+    "majorHub": true
+  },
+  {
+    "id": "stop-hassan",
+    "name": "Hassan KSRTC Bus Stand",
+    "kannadaName": "ಹಾಸನ",
+    "coordinates": [13.0033, 76.1004],
+    "platform": "Main Terminal",
+    "majorHub": true
+  },
+  {
+    "id": "stop-sakleshpur",
+    "name": "Sakleshpur Bus Stand",
+    "kannadaName": "ಸಕಲೇಶಪುರ (ಘಾಟಿ ಆರಂಭ)",
+    "coordinates": [12.9734, 75.7869],
+    "platform": "Platform 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-uppinangady",
+    "name": "Uppinangady Bus Stand",
+    "kannadaName": "ಉಪ್ಪಿನಂಗಡಿ",
+    "coordinates": [12.8392, 75.2536],
+    "platform": "Highway Bay",
+    "majorHub": false
+  },
+  {
+    "id": "stop-bcroad",
+    "name": "B.C. Road (Bantwal) Bus Stand",
+    "kannadaName": "ಬಿ.ಸಿ. ರೋಡ್ (ಬಂಟ್ವಾಳ)",
+    "coordinates": [12.8761, 75.0345],
+    "platform": "Bay 2",
+    "majorHub": true
+  },
+  {
+    "id": "stop-mangaluru",
+    "name": "Mangaluru KSRTC Bus Stand (Bejai)",
+    "kannadaName": "ಮಂಗಳೂರು ಕೆಎಸ್‌ಆರ್‌ಟಿಸಿ (ಬಿಜೈ)",
+    "coordinates": [12.8885, 74.8458],
+    "platform": "Terminal 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-hunsur",
+    "name": "Hunsur KSRTC Bus Stand",
+    "kannadaName": "ಹುಣಸೂರು",
+    "coordinates": [12.3089, 76.2921],
+    "platform": "Bay 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-kushalnagar",
+    "name": "Kushalnagar Bus Stand",
+    "kannadaName": "ಕುಶಾಲನಗರ (ಕಾವೇರಿ ನದಿ ತೀರ)",
+    "coordinates": [12.4578, 75.9621],
+    "platform": "Main Bay",
+    "majorHub": true
+  },
+  {
+    "id": "stop-madikeri",
+    "name": "Madikeri KSRTC Bus Stand (Coorg)",
+    "kannadaName": "ಮಡಿಕೇರಿ ಕೆಎಸ್‌ಆರ್‌ಟಿಸಿ (ಕೊಡಗು)",
+    "coordinates": [12.4244, 75.7382],
+    "platform": "Terminal 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-krnagar",
+    "name": "K.R. Nagar Bus Stand",
+    "kannadaName": "ಕೆ.ಆರ್. ನಗರ",
+    "coordinates": [12.5833, 76.3833],
+    "platform": "Bay 1",
+    "majorHub": false
+  },
+  {
+    "id": "stop-holenarasipura",
+    "name": "Holenarasipura KSRTC Stand",
+    "kannadaName": "ಹೊಳೆನರಸೀಪುರ",
+    "coordinates": [12.7911, 76.2415],
+    "platform": "Bay 2",
+    "majorHub": true
+  },
+  {
+    "id": "stop-arsikere",
+    "name": "Arsikere KSRTC Bus Stand",
+    "kannadaName": "ಅರಸೀಕೆರೆ (ರೈಲ್ವೆ ಜಂಕ್ಷನ್)",
+    "coordinates": [13.3134, 76.2570],
+    "platform": "Main Terminal",
+    "majorHub": true
+  },
+  {
+    "id": "stop-kadur",
+    "name": "Kadur KSRTC Bus Stand",
+    "kannadaName": "ಕಡೂರು",
+    "coordinates": [13.5539, 76.0150],
+    "platform": "Platform 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-tarikere",
+    "name": "Tarikere Bus Stand",
+    "kannadaName": "ತರೀಕೆರೆ",
+    "coordinates": [13.7118, 75.8142],
+    "platform": "Bay 2",
+    "majorHub": false
+  },
+  {
+    "id": "stop-bhadravati",
+    "name": "Bhadravati KSRTC Stand",
+    "kannadaName": "ಭದ್ರಾವತಿ (ಉಕ್ಕಿನ ನಗರ)",
+    "coordinates": [13.8417, 75.7027],
+    "platform": "Main Bay",
+    "majorHub": true
+  },
+  {
+    "id": "stop-shivamogga",
+    "name": "Shivamogga KSRTC KSRTC Stand (Shimoga)",
+    "kannadaName": "ಶಿವಮೊಗ್ಗ ಕೆಎಸ್‌ಆರ್‌ಟಿಸಿ (ಮಲೆನಾಡ ಹೆಬ್ಬಾಗಿಲು)",
+    "coordinates": [13.9326, 75.5684],
+    "platform": "Terminal 1, Bay 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-krpete",
+    "name": "Krishnarajpet KSRTC Bus Stand (K.R. Pete)",
+    "kannadaName": "ಕೃಷ್ಣರಾಜಪೇಟೆ (ಕೆ.ಆರ್. ಪೇಟೆ ಬಸ್ ನಿಲ್ದಾಣ)",
+    "aliases": [
+      "krpet",
+      "krpete",
+      "k.r.pet",
+      "k.r.pete",
+      "kr pet",
+      "kr pete",
+      "k.r. pet",
+      "k.r. pete",
+      "krishnarajpet",
+      "krishnarajapet",
+      "krishnarajapete",
+      "krishnarajpete",
+      "krishnaraja pet",
+      "krishnaraja pete",
+      "ಕೃಷ್ಣರಾಜಪೇಟೆ",
+      "ಕೆ.ಆರ್. ಪೇಟೆ",
+      "ಕೆಆರ್‌ಪೇಟೆ"
+    ],
+    "coordinates": [12.6644, 76.4912],
+    "platform": "Main Bay 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-pandavapura",
+    "name": "Pandavapura Bus Stand",
+    "kannadaName": "ಪಾಂಡವಪುರ",
+    "coordinates": [12.4975, 76.6698],
+    "platform": "Bay 1",
+    "majorHub": false
+  },
+  {
+    "id": "stop-melukote",
+    "name": "Melukote Bus Stand",
+    "kannadaName": "ಮೇಲುಕೋಟೆ (ಚೆಲುವನಾರಾಯಣ ಸ್ವಾಮಿ ಕ್ಷೇತ್ರ)",
+    "coordinates": [12.6622, 76.6472],
+    "platform": "Temple Bay",
+    "majorHub": true
+  },
+  {
+    "id": "stop-nagamangala",
+    "name": "Nagamangala KSRTC Bus Stand",
+    "kannadaName": "ನಾಗಮಂಗಲ ಕೆಎಸ್‌ಆರ್‌ಟಿಸಿ ನಿಲ್ದಾಣ",
+    "aliases": ["nagamangala", "nagamangalam", "ನಾಗಮಂಗಲ"],
+    "coordinates": [12.8210, 76.7580],
+    "platform": "Bay 1",
+    "majorHub": true
+  },
+  {
+    "id": "stop-bellurcross",
+    "name": "Bellur Cross (Adichunchanagiri / BG Nagar)",
+    "kannadaName": "ಬೆಳ್ಳೂರು ಕ್ರಾಸ್ (ಆದಿಚುಂಚನಗಿರಿ)",
+    "aliases": ["bellur cross", "bellurcross", "adichunchanagiri", "bg nagar", "ಬೆಳ್ಳೂರು ಕ್ರಾಸ್"],
+    "coordinates": [12.9782, 76.7320],
+    "platform": "Highway Junction",
+    "majorHub": false
+  },
+  {
+    "id": "stop-srinagara",
+    "name": "Srinagara Bus Stand (Bengaluru South)",
+    "kannadaName": "ಶ್ರೀನಗರ ಬಸ್ ನಿಲ್ದಾಣ (ಬೆಂಗಳೂರು ದಕ್ಷಿಣ)",
+    "aliases": ["srinagara", "srinagar", "srinagar bangalore", "ಶ್ರೀನಗರ"],
+    "coordinates": [12.9426, 77.5463],
+    "platform": "Terminal Bay 2",
+    "majorHub": true
+  },
+  {
+    "id": "stop-akkihebbalu",
+    "name": "Akkihebbalu Bus Stand",
+    "kannadaName": "ಅಕ್ಕಿಹೆಬ್ಬಾಳು (ಹೇಮಾವತಿ ತೀರ)",
+    "aliases": ["akkihebbalu", "akkihebbal", "ಅಕ್ಕಿಹೆಬ್ಬಾಳು"],
+    "coordinates": [12.6450, 76.3680],
+    "platform": "Bay 1",
+    "majorHub": false
+  },
+  {
+    "id": "stop-bherya",
+    "name": "Bherya Bus Stand",
+    "kannadaName": "ಬೇರ್ಯ ಬಸ್ ನಿಲ್ದಾಣ",
+    "aliases": ["bherya", "berya", "bhirya", "ಬೇರ್ಯ"],
+    "coordinates": [12.6047, 76.2625],
+    "platform": "Main Junction Bay",
+    "majorHub": true
+  }
+]

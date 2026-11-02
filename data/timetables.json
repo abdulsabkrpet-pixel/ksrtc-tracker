@@ -1,0 +1,313 @@
+[
+  {
+    "routeId": "KA-BLR-MYS-01",
+    "routeTitle": "Bengaluru (Majestic) ↔ Mysuru Suburban",
+    "kannadaTitle": "ಬೆಂಗಳೂರು ↔ ಮೈಸೂರು",
+    "schedules": [
+      {
+        "serviceType": "Airavat Club Class (Multi-Axle)",
+        "depTime": "06:00 AM",
+        "arrTime": "09:00 AM",
+        "frequency": "Every 30 mins (06:00 to 22:30)",
+        "platform": "Terminal 1, Bay 4",
+        "fare": "₹320",
+        "busClass": "AC Luxury"
+      },
+      {
+        "serviceType": "Karnataka Sarige (Express Red Bus)",
+        "depTime": "05:30 AM",
+        "arrTime": "09:00 AM",
+        "frequency": "Every 10-15 mins 24x7",
+        "platform": "Terminal 1, Bay 7",
+        "fare": "₹155",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "FlyBus (Airport / Satellite Express)",
+        "depTime": "07:15 AM",
+        "arrTime": "10:15 AM",
+        "frequency": "Every 1 hr (Direct via Expressway)",
+        "platform": "Satellite Bus Stand, Bay 1",
+        "fare": "₹360",
+        "busClass": "AC Premium"
+      },
+      {
+        "serviceType": "EV-Power Plus (Electric AC Express)",
+        "depTime": "08:00 AM",
+        "arrTime": "10:45 AM",
+        "frequency": "Every 45 mins",
+        "platform": "Terminal 1, Bay 5",
+        "fare": "₹340",
+        "busClass": "Electric AC"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-BLR-MNG-03",
+    "routeTitle": "Bengaluru (Majestic) ↔ Mangaluru (Bejai)",
+    "kannadaTitle": "ಬೆಂಗಳೂರು ↔ ಮಂಗಳೂರು (ಶಿರಾಡಿ ಘಾಟಿ)",
+    "schedules": [
+      {
+        "serviceType": "Ambari Utsav (Volvo 9600s Sleeper)",
+        "depTime": "21:30 PM",
+        "arrTime": "05:30 AM",
+        "frequency": "Daily at 21:00, 21:30, 22:15",
+        "platform": "Terminal 1, Bay 2",
+        "fare": "₹890",
+        "busClass": "AC Sleeper"
+      },
+      {
+        "serviceType": "Airavat Club Class",
+        "depTime": "07:00 AM",
+        "arrTime": "14:30 PM",
+        "frequency": "Hourly daytime (07:00 to 15:00)",
+        "platform": "Terminal 1, Bay 3",
+        "fare": "₹680",
+        "busClass": "AC Luxury"
+      },
+      {
+        "serviceType": "Karnataka Sarige Day Express",
+        "depTime": "06:30 AM",
+        "arrTime": "15:00 PM",
+        "frequency": "Every 30 mins",
+        "platform": "Terminal 1, Bay 10",
+        "fare": "₹385",
+        "busClass": "Non-AC Express"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-BLR-HUB-02",
+    "routeTitle": "Bengaluru (Majestic) ↔ Hubballi (Gokul Road)",
+    "kannadaTitle": "ಬೆಂಗಳೂರು ↔ ಹುಬ್ಬಳ್ಳಿ",
+    "schedules": [
+      {
+        "serviceType": "Rajahamsa Executive",
+        "depTime": "08:30 AM",
+        "arrTime": "15:30 PM",
+        "frequency": "Hourly (06:00 to 23:00)",
+        "platform": "Terminal 2, Bay 1",
+        "fare": "₹480",
+        "busClass": "Deluxe Semi-Sleeper"
+      },
+      {
+        "serviceType": "Kalyana Ratha (AC Sleeper)",
+        "depTime": "22:00 PM",
+        "arrTime": "05:00 AM",
+        "frequency": "Nightly at 21:30, 22:00, 22:45",
+        "platform": "Terminal 2, Bay 3",
+        "fare": "₹750",
+        "busClass": "AC Sleeper"
+      },
+      {
+        "serviceType": "Karnataka Sarige",
+        "depTime": "06:00 AM",
+        "arrTime": "14:00 PM",
+        "frequency": "Every 20 mins",
+        "platform": "Terminal 2, Bay 6",
+        "fare": "₹345",
+        "busClass": "Non-AC Express"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-BLR-BLG-04",
+    "routeTitle": "Bengaluru (Majestic) ↔ Belagavi (CBT)",
+    "kannadaTitle": "ಬೆಂಗಳೂರು ↔ ಬೆಳಗಾವಿ",
+    "schedules": [
+      {
+        "serviceType": "Airavat Diamond Class",
+        "depTime": "08:15 AM",
+        "arrTime": "17:15 PM",
+        "frequency": "4 Daily Departures",
+        "platform": "Terminal 2, Bay 2",
+        "fare": "₹920",
+        "busClass": "AC Luxury"
+      },
+      {
+        "serviceType": "Non-AC Sleeper (NWKRTC)",
+        "depTime": "20:30 PM",
+        "arrTime": "06:00 AM",
+        "frequency": "Daily at 20:30, 21:15, 22:00",
+        "platform": "Terminal 2, Bay 5",
+        "fare": "₹610",
+        "busClass": "Non-AC Sleeper"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-MYS-MDK-05",
+    "routeTitle": "Mysuru Suburban ↔ Madikeri (Coorg)",
+    "kannadaTitle": "ಮೈಸೂರು ↔ ಮಡಿಕೇರಿ (ಕೊಡಗು)",
+    "schedules": [
+      {
+        "serviceType": "Coorg Sarige Express",
+        "depTime": "06:00 AM",
+        "arrTime": "08:40 AM",
+        "frequency": "Every 20 mins (06:00 to 20:00)",
+        "platform": "Platform 3, Bay 2",
+        "fare": "₹120",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "FlyBus / Airavat (Mysuru - Coorg)",
+        "depTime": "11:00 AM",
+        "arrTime": "13:15 PM",
+        "frequency": "3 Daily services",
+        "platform": "Platform 1, Bay 1",
+        "fare": "₹260",
+        "busClass": "AC Luxury"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-MYS-SMG-06",
+    "routeTitle": "Mysuru Suburban ↔ Shivamogga (Shimoga)",
+    "kannadaTitle": "ಮೈಸೂರು ↔ ಶಿವಮೊಗ್ಗ (ಮಲೆನಾಡು)",
+    "schedules": [
+      {
+        "serviceType": "Malnad Sarige (Express Red Bus)",
+        "depTime": "06:30 AM",
+        "arrTime": "12:00 PM",
+        "frequency": "Every 30 mins (05:30 to 20:00)",
+        "platform": "Suburban Stand, Platform 2",
+        "fare": "₹235",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "Rajahamsa Executive (Via Hassan & Arsikere)",
+        "depTime": "08:15 AM",
+        "arrTime": "13:45 PM",
+        "frequency": "Hourly services",
+        "platform": "Platform 1, Bay 3",
+        "fare": "₹340",
+        "busClass": "Deluxe Semi-Sleeper"
+      },
+      {
+        "serviceType": "Airavat Club Class (Direct)",
+        "depTime": "14:00 PM",
+        "arrTime": "19:15 PM",
+        "frequency": "Daily at 14:00 & 16:30",
+        "platform": "Platform 1, Bay 1",
+        "fare": "₹490",
+        "busClass": "AC Luxury"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-BLR-KRP-07",
+    "routeTitle": "Bengaluru (Majestic) ↔ Krishnarajpet (K.R. Pete)",
+    "kannadaTitle": "ಬೆಂಗಳೂರು ↔ ಕೃಷ್ಣರಾಜಪೇಟೆ (ಮೇಲುಕೋಟೆ ಮಾರ್ಗ)",
+    "schedules": [
+      {
+        "serviceType": "Karnataka Sarige (K.R. Pete Express)",
+        "depTime": "06:15 AM",
+        "arrTime": "09:30 AM",
+        "frequency": "Every 30-45 mins (05:30 to 21:00)",
+        "platform": "Satellite Stand, Bay 4 / Majestic Bay 9",
+        "fare": "₹180",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "Melukote Cheluvanarayana Temple Special",
+        "depTime": "07:30 AM",
+        "arrTime": "10:45 AM",
+        "frequency": "Daily 4 services via Mandya & Melukote",
+        "platform": "Terminal 1, Bay 6",
+        "fare": "₹190",
+        "busClass": "Express Deluxe"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-MYS-KRP-08",
+    "routeTitle": "Mysuru Suburban ↔ Hassan via Krishnarajpet",
+    "kannadaTitle": "ಮೈಸೂರು ↔ ಹಾಸನ (ಕೆ.ಆರ್. ಪೇಟೆ & ಚನ್ನರಾಯಪಟ್ಟಣ)",
+    "schedules": [
+      {
+        "serviceType": "Sarige Express (K.R. Pete Corridor)",
+        "depTime": "07:00 AM",
+        "arrTime": "09:45 AM",
+        "frequency": "Every 20 mins (06:00 to 20:30)",
+        "platform": "Mysuru Suburban Stand, Bay 5",
+        "fare": "₹135",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "K.R. Pete Ordinary Gramantara Sarige",
+        "depTime": "06:30 AM",
+        "arrTime": "08:15 AM",
+        "frequency": "Every 15 mins (Mysuru - Srirangapatna - K.R. Pete)",
+        "platform": "Suburban Stand, Bay 8",
+        "fare": "₹75",
+        "busClass": "Ordinary / Gramantara"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-KRP-SRN-09",
+    "routeTitle": "Krishnarajpet (K.R. Pete) ↔ Srinagara (Bengaluru) via Nagamangala",
+    "kannadaTitle": "ಕೃಷ್ಣರಾಜಪೇಟೆ ↔ ಶ್ರೀನಗರ (ನಾಗಮಂಗಲ & ಬೆಳ್ಳೂರು ಕ್ರಾಸ್ ಮಾರ್ಗ)",
+    "schedules": [
+      {
+        "serviceType": "Karnataka Sarige (K.R. Pete - Srinagara Direct)",
+        "depTime": "06:45 AM",
+        "arrTime": "09:55 AM",
+        "frequency": "Every 30 mins (05:45 to 20:30)",
+        "platform": "K.R. Pete Main Bay / Srinagara Bay 1",
+        "fare": "₹175",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "Nagamangala - Bellur Cross Connect Express",
+        "depTime": "08:00 AM",
+        "arrTime": "11:10 AM",
+        "frequency": "Hourly daytime services",
+        "platform": "K.R. Pete Platform 2",
+        "fare": "₹175",
+        "busClass": "Express Sarige"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-KRP-BHR-10",
+    "routeTitle": "Krishnarajpet (K.R. Pete) ↔ Bherya via Akkihebbalu",
+    "kannadaTitle": "ಕೃಷ್ಣರಾಜಪೇಟೆ ↔ ಬೇರ್ಯ (ಅಕ್ಕಿಹೆಬ್ಬಾಳು ಮಾರ್ಗ)",
+    "schedules": [
+      {
+        "serviceType": "Gramantara Sarige Shuttle",
+        "depTime": "06:00 AM",
+        "arrTime": "06:40 AM",
+        "frequency": "Every 20 mins (06:00 to 21:00)",
+        "platform": "K.R. Pete Local Platform 3",
+        "fare": "₹35",
+        "busClass": "Ordinary / Gramantara"
+      }
+    ]
+  },
+  {
+    "routeId": "KA-SMG-MYS-KRP-11",
+    "routeTitle": "Shivamogga ↔ Mysuru via K.R. Pete (Shimoga Express)",
+    "kannadaTitle": "ಶಿವಮೊಗ್ಗ ↔ ಮೈಸೂರು (ಕೆ.ಆರ್. ಪೇಟೆ & ಅರಸೀಕೆರೆ ಮಾರ್ಗ)",
+    "schedules": [
+      {
+        "serviceType": "Malnad Sarige (Direct via K.R. Pete)",
+        "depTime": "06:15 AM",
+        "arrTime": "12:00 PM",
+        "frequency": "Every 45 mins",
+        "platform": "Shivamogga Bay 4 / Mysuru Bay 6",
+        "fare": "₹245",
+        "busClass": "Non-AC Express"
+      },
+      {
+        "serviceType": "Rajahamsa Executive (Shimoga - K.R. Pete - Mysuru)",
+        "depTime": "07:00 AM",
+        "arrTime": "12:45 PM",
+        "frequency": "Daily at 07:00, 11:30, 16:00",
+        "platform": "Suburban Terminal 1, Bay 2",
+        "fare": "₹350",
+        "busClass": "Deluxe Semi-Sleeper"
+      }
+    ]
+  }
+]

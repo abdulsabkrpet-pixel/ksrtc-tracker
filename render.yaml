@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ksrtc-bus-tracker
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production

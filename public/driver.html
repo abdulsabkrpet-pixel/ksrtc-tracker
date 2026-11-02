@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KSRTC Driver GPS Telemetry Broadcast</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .driver-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .driver-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .form-control {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: var(--ksrtc-gold);
+    }
+    .speedo-box {
+      text-align: center;
+      padding: 24px 0;
+      background: radial-gradient(circle, rgba(192, 38, 45, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .speedo-number {
+      font-size: 56px;
+      font-weight: 900;
+      color: #38bdf8;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .speedo-unit {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .btn-broadcast {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-start {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: white;
+    }
+    .btn-stop {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: white;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .stat-cell {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-cell .lbl { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; }
+    .stat-cell .val { font-size: 13px; font-weight: 700; color: white; margin-top: 3px; }
+  </style>
+</head>
+<body style="overflow-y: auto;">
+  <div class="driver-container">
+    <div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="logo-badge">KSRTC</div>
+          <h2 style="font-size: 18px; font-weight: 700;">Driver Telemetry Mode</h2>
+        </div>
+        <a href="index.html" style="color: var(--ksrtc-gold); text-decoration: none; font-size: 13px; font-weight: 600;">← Map View</a>
+      </div>
+
+      <div class="driver-card">
+        <div class="speedo-box">
+          <div id="live-speed" class="speedo-number">0</div>
+          <div class="speedo-unit">KM / H</div>
+        </div>
+
+        <div class="form-group">
+          <label>Bus Registration Number</label>
+          <input type="text" id="inp-bus-id" class="form-control" value="KA-09-F-8812" placeholder="e.g. KA-09-F-8812">
+        </div>
+
+        <div class="form-group">
+          <label>Driver / Conductor Name</label>
+          <input type="text" id="inp-driver-name" class="form-control" value="Captain Ramesh Gowda">
+        </div>
+
+        <div class="form-group">
+          <label>Assigned Route</label>
+          <select id="inp-route-id" class="form-control">
+            <option value="KA-BLR-MYS-01">Bengaluru to Mysuru (NH 275 Corridor)</option>
+            <option value="KA-BLR-MNG-03">Bengaluru to Mangaluru (NH 75 Shiradi Ghat)</option>
+            <option value="KA-BLR-HUB-02">Bengaluru to Hubballi (NH 48 Corridor)</option>
+            <option value="KA-BLR-BLG-04">Bengaluru to Belagavi (NH 48 Corridor)</option>
+            <option value="KA-MYS-MDK-05">Mysuru to Madikeri (Coorg Corridor)</option>
+            <option value="KA-MYS-SMG-06">Mysuru to Shivamogga (Shimoga Express)</option>
+            <option value="KA-BLR-KRP-07">Bengaluru to Krishnarajpet (K.R. Pete)</option>
+            <option value="KA-MYS-KRP-08">Mysuru to Hassan via K.R. Pete</option>
+            <option value="KA-KRP-SRN-09">K.R. Pete to Srinagara (via Nagamangala)</option>
+            <option value="KA-KRP-BHR-10">K.R. Pete to Bherya (via Akkihebbalu)</option>
+            <option value="KA-SMG-MYS-KRP-11">Shivamogga to Mysuru via K.R. Pete</option>
+          </select>
+        </div>
+
+        <button id="btn-toggle-broadcast" class="btn-broadcast btn-start">
+          <span>📡 Start Broadcasting GPS</span>
+        </button>
+
+        <div class="stats-grid">
+          <div class="stat-cell">
+            <div class="lbl">Latitude</div>
+            <div id="val-lat" class="val">--</div>
+          </div>
+          <div class="stat-cell">
+            <div class="lbl">Longitude</div>
+            <div id="val-lon" class="val">--</div>
+          </div>
+          <div class="stat-cell">
+            <div class="lbl">Packets Sent</div>
+            <div id="val-packets" class="val">0</div>
+          </div>
+          <div class="stat-cell">
+            <div class="lbl">Broadcast Status</div>
+            <div id="val-status" class="val" style="color: #94a3b8;">Standby</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-size: 11px; color: var(--text-secondary); padding: 10px 0;">
+      KSRTC Intelligent Transport Telemetry Engine &bull; Safe Driving Protocol
+    </div>
+  </div>
+
+  <script>
+    let isBroadcasting = false;
+    let watchId = null;
+    let packetsCount = 0;
+
+    const btnToggle = document.getElementById('btn-toggle-broadcast');
+    const speedEl = document.getElementById('live-speed');
+    const latEl = document.getElementById('val-lat');
+    const lonEl = document.getElementById('val-lon');
+    const packetsEl = document.getElementById('val-packets');
+    const statusEl = document.getElementById('val-status');
+
+    btnToggle.addEventListener('click', () => {
+      if (!isBroadcasting) {
+        startBroadcasting();
+      } else {
+        stopBroadcasting();
+      }
+    });
+
+    function startBroadcasting() {
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by this browser.");
+        return;
+      }
+
+      const busId = document.getElementById('inp-bus-id').value.trim();
+      const driverName = document.getElementById('inp-driver-name').value.trim();
+
+      if (!busId) {
+        alert("Please enter a Bus Registration Number.");
+        return;
+      }
+
+      isBroadcasting = true;
+      btnToggle.className = "btn-broadcast btn-stop";
+      btnToggle.innerHTML = "<span>🛑 Stop Broadcasting</span>";
+      statusEl.textContent = "Broadcasting Live";
+      statusEl.style.color = "#22c55e";
+
+      watchId = navigator.geolocation.watchPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const speed = pos.coords.speed !== null ? Math.round(pos.coords.speed * 3.6) : 0; // m/s to km/h
+          const heading = pos.coords.heading || 0;
+
+          speedEl.textContent = speed;
+          latEl.textContent = lat.toFixed(5);
+          lonEl.textContent = lon.toFixed(5);
+
+          // Post telemetry to backend
+          fetch('/api/telemetry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              busId,
+              driverName,
+              lat,
+              lon,
+              speed,
+              heading
+            })
+          })
+          .then(res => res.json())
+          .then(() => {
+            packetsCount++;
+            packetsEl.textContent = packetsCount;
+          })
+          .catch(err => console.error("Telemetry upload failed:", err));
+        },
+        (err) => {
+          console.error("GPS Watch Error:", err);
+          alert("GPS Location Error: " + err.message);
+          stopBroadcasting();
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 1000,
+          timeout: 10000
+        }
+      );
+    }
+
+    function stopBroadcasting() {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+      }
+
+      isBroadcasting = false;
+      btnToggle.className = "btn-broadcast btn-start";
+      btnToggle.innerHTML = "<span>📡 Start Broadcasting GPS</span>";
+      statusEl.textContent = "Paused";
+      statusEl.style.color = "#94a3b8";
+      speedEl.textContent = "0";
+    }
+  </script>
+</body>
+</html>

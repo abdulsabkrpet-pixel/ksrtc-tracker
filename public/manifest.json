@@ -1,0 +1,25 @@
+{
+  "name": "KSRTC Where Is My Bus - Live Tracking",
+  "short_name": "KSRTC Bus",
+  "description": "Real-time tracking and offline timetables for Karnataka KSRTC buses",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#c0262d",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "navigation", "transportation"]
+}
