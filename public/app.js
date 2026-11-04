@@ -21,7 +21,8 @@ const I18N = {
   EN: {
     title: "ಕರ್ನಾಟಕ ಸಾರಿಗೆ • Live Tracker",
     subtitle: "Where Is My Bus • Real-time GPS",
-    searchPlaceholder: "Search Bus (e.g. KA-09) or Stop...",
+    fromPlaceholder: "From (e.g. Mysuru, Bengaluru...)",
+    toPlaceholder: "To (e.g. Shivamogga, Belagavi...)",
     allRoutes: "All Routes (ಎಲ್ಲಾ ಮಾರ್ಗಗಳು)",
     liveCount: "Buses Live",
     offline: "⚡ Offline",
@@ -46,7 +47,8 @@ const I18N = {
   KN: {
     title: "ಕರ್ನಾಟಕ ಸಾರಿಗೆ • ಲೈವ್ ಟ್ರ್ಯಾಕರ್",
     subtitle: "ನನ್ನ ಬಸ್ ಎಲ್ಲಿದೆ • ಲೈವ್ ಜಿಪಿಎಸ್",
-    searchPlaceholder: "ಬಸ್ (ಉದಾ. KA-09) ಅಥವಾ ನಿಲ್ದಾಣ ಹುಡುಕಿ...",
+    fromPlaceholder: "ಹೊರಡುವ ಸ್ಥಳ (ಉದಾ. ಮೈಸೂರು, ಬೆಂಗಳೂರು...)",
+    toPlaceholder: "ತಲುಪುವ ಸ್ಥಳ (ಉದಾ. ಶಿವಮೊಗ್ಗ, ಮಂಡ್ಯ...)",
     allRoutes: "ಎಲ್ಲಾ ಮಾರ್ಗಗಳು (All Routes)",
     liveCount: "ಬಸ್ಸುಗಳು ಲೈವ್",
     offline: "⚡ ಆಫ್‌ಲೈನ್",
@@ -75,7 +77,10 @@ function toggleLanguage() {
   const t = I18N[currentLanguage];
 
   document.getElementById('lang-btn-label').textContent = currentLanguage === 'EN' ? 'ಕನ್ನಡ' : 'English';
-  document.getElementById('bus-search-input').placeholder = t.searchPlaceholder;
+  const fromEl = document.getElementById('from-search-input');
+  if (fromEl) fromEl.placeholder = t.fromPlaceholder;
+  const toEl = document.getElementById('to-search-input');
+  if (toEl) toEl.placeholder = t.toPlaceholder;
   document.getElementById('btn-open-timetables').querySelector('span').textContent = t.timetables;
   
   // Re-render currently open bottom sheet if active
@@ -646,8 +651,149 @@ function busMatchesSearch(bus, rawSearch) {
   return false;
 }
 
+function checkStopMatchTerm(stop, term) {
+  if (!term || !stop) return false;
+  const norm = normalizeSearchTerm(term);
+  const raw = term.toLowerCase().trim();
+  
+  if (stop.id && normalizeSearchTerm(stop.id).includes(norm)) return true;
+  if (stop.name && normalizeSearchTerm(stop.name).includes(norm)) return true;
+  if (stop.name && stop.name.toLowerCase().includes(raw)) return true;
+  if (stop.kannadaName && stop.kannadaName.includes(raw)) return true;
+
+  // City aliases
+  if (norm.includes("mysore") || norm.includes("mysuru") || raw.includes("ಮೈಸೂರು")) {
+    if (stop.id && stop.id.includes("mys")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("mysuru") || stop.name.toLowerCase().includes("mysore"))) return true;
+  }
+  if (norm.includes("bangalore") || norm.includes("bengaluru") || norm.includes("majestic") || raw.includes("ಬೆಂಗಳೂರು")) {
+    if (stop.id && stop.id.includes("kbs")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("bengaluru") || stop.name.toLowerCase().includes("kempegowda") || stop.name.toLowerCase().includes("majestic"))) return true;
+  }
+  if (norm.includes("kr pet") || norm.includes("krpet") || norm.includes("krishnarajpet") || raw.includes("ಕೃಷ್ಣರಾಜಪೇಟೆ")) {
+    if (stop.id && stop.id.includes("krpet")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("krishnarajpet") || stop.name.toLowerCase().includes("kr pet"))) return true;
+  }
+  if (norm.includes("shimoga") || norm.includes("shivamogga") || raw.includes("ಶಿವಮೊಗ್ಗ")) {
+    if (stop.id && stop.id.includes("smg")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("shivamogga") || stop.name.toLowerCase().includes("shimoga"))) return true;
+  }
+  if (norm.includes("mangaluru") || norm.includes("mangalore") || raw.includes("ಮಂಗಳೂರು")) {
+    if (stop.id && stop.id.includes("mng")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("mangaluru") || stop.name.toLowerCase().includes("mangalore"))) return true;
+  }
+  if (norm.includes("hubballi") || norm.includes("hubli") || raw.includes("ಹುಬ್ಬಳ್ಳಿ")) {
+    if (stop.id && stop.id.includes("hub")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("hubballi") || stop.name.toLowerCase().includes("hubli"))) return true;
+  }
+  if (norm.includes("belagavi") || norm.includes("belgaum") || raw.includes("ಬೆಳಗಾವಿ")) {
+    if (stop.id && stop.id.includes("blg")) return true;
+    if (stop.name && (stop.name.toLowerCase().includes("belagavi") || stop.name.toLowerCase().includes("belgaum"))) return true;
+  }
+  if (norm.includes("mandya") || raw.includes("ಮಂಡ್ಯ")) {
+    if (stop.id && stop.id.includes("mandya")) return true;
+    if (stop.name && stop.name.toLowerCase().includes("mandya")) return true;
+  }
+  if (norm.includes("hassan") || raw.includes("ಹಾಸನ")) {
+    if (stop.id && stop.id.includes("hassan")) return true;
+    if (stop.name && stop.name.toLowerCase().includes("hassan")) return true;
+  }
+  if (norm.includes("madikeri") || norm.includes("coorg") || raw.includes("ಮಡಿಕೇರಿ")) {
+    if (stop.id && stop.id.includes("madikeri")) return true;
+    if (stop.name && stop.name.toLowerCase().includes("madikeri")) return true;
+  }
+  return false;
+}
+
+function busMatchesJourney(bus, fromTerm, toTerm) {
+  const hasFrom = !!fromTerm;
+  const hasTo = !!toTerm;
+  if (!hasFrom && !hasTo) return true;
+
+  const route = routes.find(r => r.id === bus.routeId);
+  const routeStops = route && route.stops ? route.stops : [];
+  const timeline = bus.stopTimeline || [];
+
+  function isStopFrom(stopObj) {
+    return checkStopMatchTerm(stopObj, fromTerm);
+  }
+  function isStopTo(stopObj) {
+    return checkStopMatchTerm(stopObj, toTerm);
+  }
+
+  if (hasFrom && hasTo) {
+    // Both From and To: check stop sequence order!
+    let fromIdx = -1;
+    let toIdx = -1;
+
+    for (let i = 0; i < routeStops.length; i++) {
+      const sId = routeStops[i];
+      const sObj = stops.find(s => s.id === sId) || { id: sId, name: sId };
+      if (fromIdx === -1 && isStopFrom(sObj)) {
+        fromIdx = i;
+      }
+      if (isStopTo(sObj)) {
+        toIdx = i;
+      }
+    }
+
+    if (fromIdx !== -1 && toIdx !== -1 && fromIdx < toIdx) {
+      return true;
+    }
+
+    // Check stop timeline
+    let tFromIdx = -1;
+    let tToIdx = -1;
+    for (let i = 0; i < timeline.length; i++) {
+      if (tFromIdx === -1 && isStopFrom(timeline[i])) {
+        tFromIdx = i;
+      }
+      if (isStopTo(timeline[i])) {
+        tToIdx = i;
+      }
+    }
+    if (tFromIdx !== -1 && tToIdx !== -1 && tFromIdx < tToIdx) {
+      return true;
+    }
+
+    // Check route origin and destination
+    if (route) {
+      const oObj = { id: '', name: route.origin || '' };
+      const dObj = { id: '', name: route.destination || '' };
+      if (isStopFrom(oObj) && isStopTo(dObj)) return true;
+    }
+
+    return false;
+  }
+
+  if (hasFrom) {
+    const inRoute = routeStops.some(sId => {
+      const sObj = stops.find(s => s.id === sId) || { id: sId, name: sId };
+      return isStopFrom(sObj);
+    });
+    const inTimeline = timeline.some(s => isStopFrom(s));
+    const inOrigin = route && isStopFrom({ id: '', name: route.origin || '' });
+    return inRoute || inTimeline || inOrigin;
+  }
+
+  if (hasTo) {
+    const inRoute = routeStops.some(sId => {
+      const sObj = stops.find(s => s.id === sId) || { id: sId, name: sId };
+      return isStopTo(sObj);
+    });
+    const inTimeline = timeline.some(s => isStopTo(s));
+    const inDest = route && isStopTo({ id: '', name: route.destination || '' });
+    return inRoute || inTimeline || inDest;
+  }
+
+  return true;
+}
+
 function updateBusesOnMap(busesList) {
-  const searchTerm = document.getElementById('bus-search-input').value.trim();
+  const fromEl = document.getElementById('from-search-input');
+  const toEl = document.getElementById('to-search-input');
+  const fromTerm = fromEl ? fromEl.value.trim() : '';
+  const toTerm = toEl ? toEl.value.trim() : '';
   const busCountEl = document.getElementById('active-bus-count');
 
   let visibleCount = 0;
@@ -655,11 +801,11 @@ function updateBusesOnMap(busesList) {
   busesList.forEach(bus => {
     busesMap.set(bus.id, bus);
 
-    // Apply Route Filter & Search Filter
+    // Apply Route Filter & From/To Journey Filter
     const matchesRoute = (currentRouteFilter === 'ALL' || bus.routeId === currentRouteFilter);
-    const matchesSearch = busMatchesSearch(bus, searchTerm);
+    const matchesJourney = busMatchesJourney(bus, fromTerm, toTerm);
 
-    const isVisible = matchesRoute && matchesSearch;
+    const isVisible = matchesRoute && matchesJourney;
 
     let marker = busMarkers.get(bus.id);
 
@@ -899,6 +1045,7 @@ function connectWebSocket() {
         stops = msg.stops || [];
         populateRouteSelector();
         renderRoutesAndStops();
+        populateStopsDatalist();
         updateBusesOnMap(msg.buses || []);
       } else if (msg.type === 'BUS_UPDATE') {
         updateBusesOnMap(msg.buses || []);
@@ -918,26 +1065,97 @@ function connectWebSocket() {
   };
 }
 
+function populateStopsDatalist() {
+  const datalist = document.getElementById('stops-datalist');
+  if (!datalist || !stops || stops.length === 0) return;
+  datalist.innerHTML = '';
+  stops.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.name;
+    if (s.kannadaName) {
+      opt.label = s.kannadaName;
+    }
+    datalist.appendChild(opt);
+  });
+}
+
 // Setup Event Listeners
 function setupEvents() {
   // Close sheet button
   document.getElementById('btn-close-sheet').addEventListener('click', closeBusDetailSheet);
 
-  // Search input filter - dynamically triggers Place Transit Hub for any searched place
-  document.getElementById('bus-search-input').addEventListener('input', (e) => {
-    const val = e.target.value.trim();
-    if (val.length >= 2) {
-      const matchedStop = findStopBySearchTerm(val);
-      if (matchedStop) {
-        openPlaceHub(matchedStop.id, true);
+  // From & To Station Journey Search Inputs
+  const fromInput = document.getElementById('from-search-input');
+  const toInput = document.getElementById('to-search-input');
+  const btnSwap = document.getElementById('btn-swap-from-to');
+  const btnClearFrom = document.getElementById('btn-clear-from');
+  const btnClearTo = document.getElementById('btn-clear-to');
+
+  function updateClearBtnVisibility() {
+    if (btnClearFrom && fromInput) btnClearFrom.style.display = fromInput.value ? 'block' : 'none';
+    if (btnClearTo && toInput) btnClearTo.style.display = toInput.value ? 'block' : 'none';
+  }
+
+  if (fromInput) {
+    fromInput.addEventListener('input', () => {
+      updateClearBtnVisibility();
+      const val = fromInput.value.trim();
+      if (val.length >= 2 && (!toInput || !toInput.value.trim())) {
+        const matchedStop = findStopBySearchTerm(val);
+        if (matchedStop) openPlaceHub(matchedStop.id, true);
+      } else if (val === '' && (!toInput || !toInput.value.trim())) {
+        if (activeHubStopId) closePlaceHub();
       }
-    } else if (val === '') {
-      if (activeHubStopId) {
-        closePlaceHub();
+      updateBusesOnMap(Array.from(busesMap.values()));
+    });
+  }
+
+  if (toInput) {
+    toInput.addEventListener('input', () => {
+      updateClearBtnVisibility();
+      const val = toInput.value.trim();
+      if (val.length >= 2 && (!fromInput || !fromInput.value.trim())) {
+        const matchedStop = findStopBySearchTerm(val);
+        if (matchedStop) openPlaceHub(matchedStop.id, true);
+      } else if (val === '' && (!fromInput || !fromInput.value.trim())) {
+        if (activeHubStopId) closePlaceHub();
       }
-    }
-    updateBusesOnMap(Array.from(busesMap.values()));
-  });
+      updateBusesOnMap(Array.from(busesMap.values()));
+    });
+  }
+
+  if (btnSwap) {
+    btnSwap.addEventListener('click', () => {
+      if (!fromInput || !toInput) return;
+      const temp = fromInput.value;
+      fromInput.value = toInput.value;
+      toInput.value = temp;
+      updateClearBtnVisibility();
+      updateBusesOnMap(Array.from(busesMap.values()));
+    });
+  }
+
+  if (btnClearFrom) {
+    btnClearFrom.addEventListener('click', () => {
+      if (fromInput) fromInput.value = '';
+      updateClearBtnVisibility();
+      if (!toInput || !toInput.value) {
+        if (activeHubStopId) closePlaceHub();
+      }
+      updateBusesOnMap(Array.from(busesMap.values()));
+    });
+  }
+
+  if (btnClearTo) {
+    btnClearTo.addEventListener('click', () => {
+      if (toInput) toInput.value = '';
+      updateClearBtnVisibility();
+      if (!fromInput || !fromInput.value) {
+        if (activeHubStopId) closePlaceHub();
+      }
+      updateBusesOnMap(Array.from(busesMap.values()));
+    });
+  }
 
   // Close Place Hub Drawer
   const closeHubBtn = document.getElementById('btn-close-hub');
@@ -1253,7 +1471,10 @@ function setupPWA() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('[PWA] Service Worker registered with scope:', reg.scope))
+        .then(reg => {
+          console.log('[PWA] Service Worker registered with scope:', reg.scope);
+          reg.update();
+        })
         .catch(err => console.warn('[PWA] Service Worker registration failed:', err));
     });
   }

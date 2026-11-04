@@ -1,9 +1,11 @@
 // KSRTC Where Is My Bus - Progressive Web App Service Worker
-const CACHE_NAME = 'ksrtc-tracker-v2';
+const CACHE_NAME = 'ksrtc-tracker-v3';
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/styles.css?v=3',
+  '/app.js?v=3',
   '/styles.css',
   '/app.js',
   '/driver.html',
@@ -92,7 +94,24 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Handle all other assets: Cache first, fallback to network
+  // Handle HTML navigation, scripts & styles: Network-first, fallback to cache
+  const isHtml = event.request.mode === 'navigate' || (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html'));
+  if (isHtml || requestUrl.pathname === '/' || requestUrl.pathname === '/index.html' || requestUrl.pathname.endsWith('.js') || requestUrl.pathname.endsWith('.css')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const copy = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Handle all other assets (images, fonts): Cache first, fallback to network
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

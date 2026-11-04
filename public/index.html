@@ -12,7 +12,7 @@
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <!-- Custom Styling -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚍</text></svg>">
 </head>
 <body>
@@ -50,12 +50,33 @@
       </div>
     </header>
 
-    <!-- Filters & Search Bar -->
-    <div class="filter-bar">
-      <div class="search-input-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="bus-search-input" placeholder="Search Bus (e.g. KA-09) or Stop..." autocomplete="off">
+    <!-- Filters & From/To Search Bars -->
+    <div class="filter-bar from-to-filter-bar">
+      <div class="from-to-container">
+        <!-- From Bar -->
+        <div class="station-input-wrapper from-wrapper">
+          <span class="station-dot from-dot" title="From (Origin)">🟢</span>
+          <input type="text" id="from-search-input" list="stops-datalist" placeholder="From (e.g. Mysuru, Bengaluru...)" autocomplete="off">
+          <button id="btn-clear-from" class="btn-clear-station" title="Clear From" style="display: none;">&times;</button>
+        </div>
+
+        <!-- Swap Button -->
+        <button id="btn-swap-from-to" class="btn-swap-stations" title="Swap From &amp; To (ದಿಕ್ಕು ಬದಲಿಸಿ)">
+          <span>⇄</span>
+        </button>
+
+        <!-- To Bar -->
+        <div class="station-input-wrapper to-wrapper">
+          <span class="station-dot to-dot" title="To (Destination)">🔴</span>
+          <input type="text" id="to-search-input" list="stops-datalist" placeholder="To (e.g. Shivamogga, Belagavi...)" autocomplete="off">
+          <button id="btn-clear-to" class="btn-clear-station" title="Clear To" style="display: none;">&times;</button>
+        </div>
       </div>
+
+      <!-- Datalist for Stop Autocomplete -->
+      <datalist id="stops-datalist"></datalist>
+
+      <!-- Corridor Route Selector -->
       <select id="route-selector" class="route-select">
         <option value="ALL">All Routes (ಎಲ್ಲಾ ಮಾರ್ಗಗಳು)</option>
       </select>
@@ -309,6 +330,6 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <!-- Client Application Script -->
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
