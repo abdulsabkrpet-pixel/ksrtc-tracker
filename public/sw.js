@@ -1,9 +1,11 @@
 // KSRTC Where Is My Bus - Progressive Web App Service Worker
-const CACHE_NAME = 'ksrtc-tracker-v3';
+const CACHE_NAME = 'ksrtc-tracker-v4';
 
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/styles.css?v=4',
+  '/app.js?v=4',
   '/styles.css?v=3',
   '/app.js?v=3',
   '/styles.css',
@@ -22,16 +24,20 @@ const API_ROUTES_TO_CACHE = [
   '/api/stops'
 ];
 
-// Install Event - Pre-cache shell assets and timetables
+// Install Event - Pre-cache shell assets bypassing browser HTTP cache
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      console.log('[SW] Pre-caching offline shell and timetables');
+      console.log('[SW] Pre-caching offline shell and timetables (v4)');
       
-      // Cache core static assets
+      // Cache core static assets with cache: reload to force fresh network fetch
       for (const asset of STATIC_ASSETS) {
         try {
-          await cache.add(asset);
+          const req = new Request(asset, { cache: 'reload' });
+          const res = await fetch(req);
+          if (res && res.status === 200) {
+            await cache.put(asset, res);
+          }
         } catch (err) {
           console.warn('[SW] Could not pre-cache asset:', asset, err);
         }
@@ -40,7 +46,7 @@ self.addEventListener('install', (event) => {
       // Pre-fetch and cache offline timetables and routes
       for (const apiRoute of API_ROUTES_TO_CACHE) {
         try {
-          const response = await fetch(apiRoute);
+          const response = await fetch(apiRoute, { cache: 'reload' });
           if (response && response.status === 200) {
             await cache.put(apiRoute, response.clone());
           }
@@ -53,19 +59,22 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate Event - Clean old caches
+// Activate Event - Clean old caches & claim clients immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME).map((key) => {
+          console.log('[SW] Deleting old cache:', key);
+          return caches.delete(key);
+        })
       );
     })
   );
   self.clients.claim();
 });
 
-// Fetch Event - Stale-While-Revalidate for APIs & Cache-First for static
+// Fetch Event - Stale-While-Revalidate for APIs & Network-First for static
 self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
 

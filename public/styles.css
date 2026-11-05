@@ -156,6 +156,29 @@ body, html {
   background: rgba(255, 255, 255, 0.25);
 }
 
+.app-version-badge {
+  display: inline-block;
+  background: #22c55e;
+  color: #0f172a;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+
+@keyframes spin-refresh {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rotating span {
+  display: inline-block;
+  animation: spin-refresh 0.8s linear infinite;
+}
+
 .offline-indicator {
   background: #f59e0b;
   color: #0f172a;

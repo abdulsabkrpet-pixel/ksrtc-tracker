@@ -1063,6 +1063,22 @@ function connectWebSocket() {
   ws.onerror = (err) => {
     console.error('[WS] Socket error:', err);
   };
+
+  // REST Polling Fallback: If WebSocket is disconnected or blocked, poll every 4 seconds
+  if (!window._busPollInterval) {
+    window._busPollInterval = setInterval(() => {
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        fetch('/api/buses')
+          .then(r => r.json())
+          .then(buses => {
+            if (Array.isArray(buses) && buses.length > 0) {
+              updateBusesOnMap(buses);
+            }
+          })
+          .catch(() => {});
+      }
+    }, 4000);
+  }
 }
 
 function populateStopsDatalist() {
@@ -1341,6 +1357,31 @@ function setupEvents() {
     langBtn.addEventListener('click', toggleLanguage);
   }
 
+  // Force Refresh & Cache-Purge Button
+  const btnForceRefresh = document.getElementById('btn-force-refresh');
+  if (btnForceRefresh) {
+    btnForceRefresh.addEventListener('click', async () => {
+      btnForceRefresh.classList.add('rotating');
+      try {
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (const reg of registrations) {
+            await reg.unregister();
+          }
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+      } catch (err) {
+        console.warn('Error clearing caches:', err);
+      }
+      const url = new URL(window.location.href);
+      url.searchParams.set('reload', Date.now());
+      window.location.href = url.toString();
+    });
+  }
+
   // Crowdsource Passenger Location Toggle
   const crowdsourceBtn = document.getElementById('btn-crowdsource-toggle');
   if (crowdsourceBtn) {
@@ -1466,14 +1507,39 @@ function renderTimetables(filterRouteId = 'ALL') {
 
 // Service Worker & PWA Handling
 let deferredInstallPrompt = null;
+let refreshing = false;
 
 function setupPWA() {
   if ('serviceWorker' in navigator) {
+    // Automatically reload when the new service worker takes control
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
+
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
         .then(reg => {
           console.log('[PWA] Service Worker registered with scope:', reg.scope);
           reg.update();
+
+          // Auto-reload once new service worker installation completes
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[PWA] New version ready! Reloading...');
+                  if (!refreshing) {
+                    refreshing = true;
+                    window.location.reload();
+                  }
+                }
+              });
+            }
+          });
         })
         .catch(err => console.warn('[PWA] Service Worker registration failed:', err));
     });
@@ -1501,11 +1567,35 @@ function setupPWA() {
   updateOnlineStatus();
 }
 
+// Initial REST fetch so map and buses appear immediately without waiting for WebSocket handshake
+async function bootstrapInitialData() {
+  try {
+    const [routesRes, stopsRes, busesRes] = await Promise.all([
+      fetch('/api/routes').then(r => r.json()).catch(() => null),
+      fetch('/api/stops').then(r => r.json()).catch(() => null),
+      fetch('/api/buses').then(r => r.json()).catch(() => null)
+    ]);
+    if (routesRes && stopsRes && routes.length === 0) {
+      routes = routesRes;
+      stops = stopsRes;
+      populateRouteSelector();
+      renderRoutesAndStops();
+      populateStopsDatalist();
+    }
+    if (busesRes && Array.isArray(busesRes) && busesMap.size === 0) {
+      updateBusesOnMap(busesRes);
+    }
+  } catch (err) {
+    console.warn('[Bootstrap] Initial REST fetch error:', err);
+  }
+}
+
 // Bootstrap Application
 document.addEventListener('DOMContentLoaded', () => {
   initMap();
   setupEvents();
   setupPWA();
+  bootstrapInitialData();
   loadTimetables();
   connectWebSocket();
 });
